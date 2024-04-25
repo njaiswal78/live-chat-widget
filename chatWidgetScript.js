@@ -1,4 +1,4 @@
-function getTokenFromUrl() {
+function getCRMTokenFromUrl() {
   // Get the script element
   var scriptElement = document.querySelector(
     'script[src*="chatWidgetScript.js"]'
@@ -14,16 +14,16 @@ function getTokenFromUrl() {
 
     // Extract the token from the query parameters
     var urlParams = new URLSearchParams(scriptUrl.split("?")[1]);
-    var token = urlParams.get("token");
+    var crmToken = urlParams.get("crmToken");
 
-    return token;
+    return crmToken;
   }
 }
 
 // Function to load the chat widget
 function loadChatWidget() {
   // Get the token from the URL
-  var token = getTokenFromUrl();
+  var crmToken = getCRMTokenFromUrl();
   // Create container element
   const container = document.createElement("div");
   container.id = "chatContainer";
@@ -53,7 +53,7 @@ function loadChatWidget() {
 
   // Create iframe element
   const iframe = document.createElement("iframe");
-  iframe.src = `http://localhost:3000/${token}`;
+  iframe.src = `http://localhost:3000/${crmToken}`;
   iframe.style.width = "100%";
   iframe.style.height = "100%";
   iframe.style.border = "none";
