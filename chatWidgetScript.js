@@ -54,7 +54,7 @@ function loadChatWidget() {
 
   // Create iframe element
   const iframe = document.createElement("iframe");
-  iframe.src = `http://localhost:3000/${crmToken}`;
+  iframe.src = `https://live-chat-api.crm-messaging.cloud/${crmToken}`;
   iframe.style.width = "100%";
   iframe.style.height = "100%";
   iframe.style.border = "none";
