@@ -21,10 +21,45 @@ function getCRMTokenFromUrl() {
   }
 }
 
+const fetchWidgetConfig = async (token) => {
+  try {
+    let widgetConfig = null;
+    // Fetch widget configuration data
+    const response = await fetch(
+      `http://localhost:4000/api/v1/widgetConfig/${token}`
+    );
+
+    // Check if the fetch was successful
+    if (!response.ok) {
+      return widgetConfig;
+    }
+
+    // Parse response data
+    const data = await response.json();
+
+    // Check if the response indicates success
+    if (data && data.success) {
+      console.log("Received widget config:", data.data);
+
+      // Store widget config data in localStorage
+      localStorage.setItem("widgetConfig", JSON.stringify(data.data));
+
+      widgetConfig = data.data;
+    }
+    return widgetConfig;
+  } catch (error) {
+    console.log("Error in fetch widget config:", error.message);
+    return widgetConfig;
+  }
+};
+
 // Function to load the chat widget
-function loadChatWidget() {
+async function loadChatWidget() {
   // Get the token from the URL
   var crmToken = getCRMTokenFromUrl();
+  const widgetConfig = await fetchWidgetConfig(crmToken);
+  console.log("stfff88888888 - ", widgetConfig);
+  const alignment = widgetConfig?.alignment || "right";
   // Create container element
   const container = document.createElement("div");
   container.id = "chatContainer";
@@ -42,7 +77,11 @@ function loadChatWidget() {
     container.style.height = "calc(100% - 40px)";
     container.style.top = "20px";
     container.style.bottom = "20px";
-    container.style.right = "20px";
+    if (alignment === "right") {
+      container.style.right = "20px";
+    } else {
+      container.style.left = "20px";
+    }
   } else {
     // For mobile
     container.style.width = "calc(100% - 40px)";
@@ -54,7 +93,8 @@ function loadChatWidget() {
 
   // Create iframe element
   const iframe = document.createElement("iframe");
-  iframe.src = `http://localhost:3000/${crmToken}`;
+  // iframe.src = `http://localhost:3000/${crmToken}`;
+  iframe.src = `https://live-chat-api.crm-messaging.cloud/${crmToken}`;
   iframe.style.width = "100%";
   iframe.style.height = "100%";
   iframe.style.border = "none";
