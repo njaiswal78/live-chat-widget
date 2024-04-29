@@ -22,11 +22,12 @@ function getCRMTokenFromUrl() {
 }
 
 const fetchWidgetConfig = async (token) => {
-  try {
     let widgetConfig = null;
+  try {
+
     // Fetch widget configuration data
     const response = await fetch(
-      `http://localhost:4000/api/v1/widgetConfig/${token}`
+      `https://live-chat-api.crm-messaging.cloud/api/v1/widgetConfig/${token}`
     );
 
     // Check if the fetch was successful
