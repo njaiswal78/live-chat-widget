@@ -10,9 +10,11 @@ function getCRMTokenFromUrl() {
     // Get the URL of the current script
     var scriptUrl = src;
 
+
     // Extract the token from the query parameters
     var urlParams = new URLSearchParams(scriptUrl.split("?")[1]);
     var crmToken = urlParams.get("crmToken");
+    console.log({scriptUrl, crmToken});
 
     return crmToken;
   }
