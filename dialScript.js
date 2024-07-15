@@ -6,7 +6,7 @@ function getCRMTokenFromUrl() {
     var src = scriptElement.getAttribute("src");
     var urlParams = new URLSearchParams(src.split("?")[1]);
     var crmToken = urlParams.get("crmToken");
-    console.log("CRM Token:", crmToken);
+    // console.log("CRM Token:", crmToken);
     return crmToken;
   }
 }
@@ -17,7 +17,7 @@ function getTeamEmailFromUrl() {
     var src = scriptElement.getAttribute("src");
     var urlParams = new URLSearchParams(src.split("?")[1]);
     var team = urlParams.get("team");
-    console.log("Team Email:", team);
+    // console.log("Team Email:", team);
     return team;
   }
 }
@@ -25,7 +25,7 @@ function getTeamEmailFromUrl() {
 async function loadChatWidget() {
   let crmToken = getCRMTokenFromUrl();
   let team = getTeamEmailFromUrl();
-  console.log({ crmToken, team });
+  // console.log({ crmToken, team });
   const alignment = "right";
   const container = document.createElement("div");
   container.id = "chatContainer";
