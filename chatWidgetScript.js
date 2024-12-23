@@ -15,7 +15,7 @@ function getCRMTokenFromUrl() {
     // Extract the token from the query parameters
     var urlParams = new URLSearchParams(scriptUrl.split("?")[1]);
     var crmToken = urlParams.get("crmToken");
-    console.log({ scriptUrl, crmToken });
+   // console.log({ scriptUrl, crmToken });
 
     return crmToken;
   }
@@ -40,7 +40,7 @@ const fetchWidgetConfig = async (token) => {
 
     // Check if the response indicates success
     if (data && data.success) {
-      console.log("Received widget config:", data.data);
+     // console.log("Received widget config:", data.data);
 
       // Store widget config data in localStorage
       localStorage.setItem("widgetConfig", JSON.stringify(data.data));
@@ -59,7 +59,7 @@ async function loadChatWidget() {
   // Get the token from the URL
   var crmToken = getCRMTokenFromUrl();
   const widgetConfig = await fetchWidgetConfig(crmToken);
-  console.log("stfff88888888 - ", widgetConfig);
+ // console.log("stfff88888888 - ", widgetConfig);
   const alignment = widgetConfig?.alignment || "right";
   // Create container element
   const container = document.createElement("div");
@@ -75,9 +75,9 @@ async function loadChatWidget() {
   if (window.innerWidth >= 768) {
     // For desktop and tablet
     container.style.width = "380px";
-    container.style.height = "calc(100% - 40px)";
-    container.style.top = "20px";
-    container.style.bottom = "20px";
+    // container.style.height = "calc(100% - 40px)";
+   // container.style.top = "20px";
+   // container.style.bottom = "20px";
     if (alignment === "right") {
       container.style.right = "20px";
     } else {
@@ -85,19 +85,20 @@ async function loadChatWidget() {
     }
   } else {
     // For mobile
-    container.style.width = "calc(100% - 40px)";
-    container.style.height = "calc(100% - 110px)";
-    container.style.top = "90px";
-    container.style.bottom = "20px";
-    container.style.right = "20px";
+    container.style.width = "calc(100% - 20px)";
+    // container.style.height = "calc(100% - 110px)";
+   // container.style.top = "90px";
+   // container.style.bottom = "20px";
+   // container.style.right = "20px";
   }
+  container.style.bottom = "20px";
 
   // Create iframe element
   const iframe = document.createElement("iframe");
   // iframe.src = `http://localhost:3000/${crmToken}`;
   iframe.src = `https://live-chat-api.crm-messaging.cloud/${crmToken}`;
   iframe.style.width = "100%";
-  iframe.style.height = "100%";
+ // iframe.style.height = "100%";
   iframe.style.border = "none";
   iframe.style.background = "transparent";
 
@@ -106,6 +107,13 @@ async function loadChatWidget() {
 
   // Append container to body
   document.body.appendChild(container);
+
+   // Listen for messages from the iframe
+  window.addEventListener("message", (event) => {
+    if (event.data.type === "setHeight") {
+      iframe.style.height = `${event.data.height}px`;
+    }
+  });
 }
 
 // Call the function to load the chat widget when the page is fully loaded
